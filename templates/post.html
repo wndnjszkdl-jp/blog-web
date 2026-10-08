@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} | 얼리의 일기장</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Serif+KR:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#D92B27',
+                            redhover: '#B81F1C',
+                            softBg: '#FAF8F5',
+                            cardBg: '#FFFFFF',
+                            textDark: '#1A1818',
+                            textMuted: '#706D6B',
+                            border: '#EAE5E0'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif KR"', 'serif'],
+                        display: ['Cinzel', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Typography & Layout Styles -->
+    <style>
+        body {
+            background-color: #FAF8F5;
+            color: #1A1818;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Post Content Whitespace and Formatting */
+        .content {
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 2.0;
+            font-size: 1.05rem;
+            color: #2A2828;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF8F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D92B27;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-red selection:text-white">
+
+    <div>
+        <!-- Navigation Header (Identical to index.html) -->
+        <header class="border-b border-brand-border bg-brand-softBg sticky top-0 z-50 backdrop-blur-md bg-opacity-90">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                
+                <!-- Brand Logo / Name -->
+                <a href="/" class="flex items-center gap-2.5 group">
+                    <span class="w-8 h-8 rounded-full bg-brand-red flex items-center justify-center text-white font-serif font-bold text-lg group-hover:scale-105 transition-transform">
+                        E
+                    </span>
+                    <span class="font-bold text-lg tracking-tight text-brand-red font-serif">
+                        얼리의 일기장
+                    </span>
+                </a>
+
+                <!-- Nav Links -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-brand-textMuted">
+                    <a href="/" class="hover:text-brand-red transition-colors">홈</a>
+                    <a href="/?keyword=여행" class="hover:text-brand-red transition-colors">✈️ 여행 기록</a>
+                    <a href="/?keyword=독서" class="hover:text-brand-red transition-colors">📚 독서 리뷰</a>
+                    <a href="#about" class="hover:text-brand-red transition-colors">소개</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="flex items-center gap-3">
+                    <a href="/write" class="inline-flex items-center gap-2 bg-brand-red hover:bg-brand-redhover text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 shadow-sm hover:shadow-md active:scale-95">
+                        <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                        <span>글쓰기</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Back Navigation Bar -->
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-8">
+            <a href="/" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-textMuted hover:text-brand-red transition-colors bg-white px-4 py-2 rounded-full border border-brand-border shadow-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span>← 글 목록으로</span>
+            </a>
+        </div>
+
+        <!-- Main Article Post Wrapper -->
+        <main class="max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-20">
+            <article class="bg-white rounded-3xl border border-brand-border shadow-sm overflow-hidden p-6 sm:p-10 lg:p-14">
+                
+                <!-- Post Category & Badge -->
+                <div class="flex items-center gap-3 text-xs tracking-widest text-brand-red font-bold uppercase mb-4 font-mono">
+                    <span class="inline-flex items-center gap-1.5 bg-brand-red/10 text-brand-red px-3 py-1 rounded-full border border-brand-red/20">
+                        <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
+                        TRAVEL &amp; BOOK JOURNAL
+                    </span>
+                </div>
+
+                <!-- Post Title -->
+                <h1 class="font-serif font-black text-2xl sm:text-4xl md:text-5xl text-brand-textDark leading-tight mb-6">
+                    {{ post.title }}
+                </h1>
+
+                <!-- Post Meta Bar (Author, Date, Share) -->
+                <div class="flex flex-wrap items-center justify-between gap-4 pb-8 mb-8 border-b border-brand-border text-xs sm:text-sm text-brand-textMuted font-mono">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-brand-red/10 text-brand-red flex items-center justify-center font-bold font-serif">
+                            E
+                        </div>
+                        <div>
+                            <p class="font-semibold text-brand-textDark font-sans">얼리 (Early)</p>
+                            <div class="flex items-center gap-1 text-[11px] text-brand-textMuted">
+                                <i data-lucide="calendar" class="w-3 h-3 text-brand-red"></i>
+                                <span class="date">{{ post.created_at }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Read time and social share pills -->
+                    <div class="flex items-center gap-2">
+                        <span class="hidden sm:inline-block text-[11px] text-brand-textMuted bg-brand-softBg px-3 py-1 rounded-full border border-brand-border">
+                            ☕ 3 min read
+                        </span>
+                        <button type="button" onclick="document.execCommand('copy')" class="inline-flex items-center gap-1 bg-brand-softBg hover:bg-brand-red/10 hover:text-brand-red px-3 py-1.5 rounded-full border border-brand-border transition-colors text-xs">
+                            <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                            <span>공유</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Featured Cover Image Header -->
+                <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-2xl overflow-hidden mb-10 bg-neutral-100 border border-brand-border">
+                    <img 
+                        src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80" 
+                        alt="Post Cover Banner" 
+                        class="w-full h-full object-cover"
+                    >
+                    <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-md">
+                        Photo by Unsplash
+                    </div>
+                </div>
+
+                <!-- Post Body Content -->
+                <div class="content leading-relaxed">
+                    {{ post.content }}
+                </div>
+
+                <!-- Post Footer Action & Author Card -->
+                <div class="mt-14 pt-8 border-t border-brand-border">
+                    
+                    <!-- Author Profile Box -->
+                    <div class="bg-brand-softBg rounded-2xl p-6 border border-brand-border flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-8">
+                        <div class="w-14 h-14 rounded-full bg-brand-red text-white flex items-center justify-center font-serif text-2xl font-bold shrink-0 shadow-sm">
+                            E
+                        </div>
+                        <div class="text-center sm:text-left">
+                            <h3 class="font-serif font-bold text-base text-brand-textDark mb-1">
+                                작성자 : 얼리 (Early)
+                            </h3>
+                            <p class="text-xs text-brand-textMuted leading-relaxed mb-3">
+                                길 위에서 만나는 풍경과 서점 구석에서 발견한 마음 속 한 문장을 기리며 기록하는 사람입니다.
+                            </p>
+                            <div class="flex items-center justify-center sm:justify-start gap-3 text-xs text-brand-red font-semibold">
+                                <a href="/?keyword=여행" class="hover:underline">#여행기록</a>
+                                <a href="/?keyword=독서" class="hover:underline">#서평모음</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation Button Bar -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <a href="/" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-textDark hover:bg-black text-white text-xs sm:text-sm font-bold px-6 py-3 rounded-full transition-all shadow-sm">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span>← 글 목록으로</span>
+                        </a>
+
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <a href="/write" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-redhover text-white text-xs sm:text-sm font-bold px-6 py-3 rounded-full transition-colors shadow-sm">
+                                <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                                <span>새 글 쓰기</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+        </main>
+
+        <!-- Newsletter / Subscribe Banner Section -->
+        <section class="border-t border-brand-border bg-white py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="text-xs font-bold text-brand-red tracking-widest uppercase mb-2 block font-mono">Newsletter</span>
+                <h2 class="font-serif text-3xl sm:text-4xl text-brand-textDark font-bold mb-4 tracking-tight">
+                    얼리의 여행 편지를 구독해보세요.
+                </h2>
+                <p class="text-xs sm:text-sm text-brand-textMuted max-w-lg mx-auto mb-8">
+                    새로운 여행지 솔직 후기와 마음을 두드리는 도서 추천 목록을 매월 2회 이메일로 전해드립니다.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+                    <input 
+                        type="email" 
+                        placeholder="이메일 주소를 입력해주세요" 
+                        class="w-full bg-brand-softBg border border-brand-border text-xs sm:text-sm px-5 py-3 rounded-full outline-none focus:border-brand-red"
+                    >
+                    <button type="button" class="w-full sm:w-auto whitespace-nowrap bg-brand-red hover:bg-brand-redhover text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full transition-colors shadow-sm">
+                        구독 신청
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Editorial Footer -->
+    <footer id="about" class="bg-brand-textDark text-white pt-14 pb-8 border-t border-brand-textDark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-neutral-800">
+                <!-- Col 1: Brand Info -->
+                <div class="md:col-span-2">
+                    <a href="/" class="inline-block font-serif text-xl font-bold text-white mb-3">
+                        얼리의 일기장 <span class="text-brand-red">.</span>
+                    </a>
+                    <p class="text-xs text-neutral-400 leading-relaxed max-w-sm">
+                        발길이 닿는 곳마다 사진과 글로 남기는 여행의 순간들, 그리고 가슴을 채우는 책들의 이야기를 간직하는 개인 기록 공간입니다.
+                    </p>
+                </div>
+
+                <!-- Col 2: Quick Navigation -->
+                <div>
+                    <h4 class="font-mono text-xs text-brand-red uppercase font-bold tracking-wider mb-3">NAVIGATION</h4>
+                    <ul class="space-y-2 text-xs text-neutral-400">
+                        <li><a href="/" class="hover:text-white transition-colors">홈 메인</a></li>
+                        <li><a href="/?keyword=여행" class="hover:text-white transition-colors">여행 기록 모음</a></li>
+                        <li><a href="/?keyword=독서" class="hover:text-white transition-colors">독서 리뷰 모음</a></li>
+                        <li><a href="/write" class="hover:text-white transition-colors">새 글 작성하기</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Social & Info -->
+                <div>
+                    <h4 class="font-mono text-xs text-brand-red uppercase font-bold tracking-wider mb-3">FOLLOW EARLY</h4>
+                    <ul class="space-y-2 text-xs text-neutral-400">
+                        <li class="flex items-center gap-2"><i data-lucide="instagram" class="w-3.5 h-3.5 text-brand-red"></i> @early_journal</li>
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-3.5 h-3.5 text-brand-red"></i> early@diary.com</li>
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-red"></i> Seoul, South Korea</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright Bar -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-500 font-mono">
+                <p>© 2026 얼리의 일기장 (Early's Journal). All Rights Reserved.</p>
+                <div class="flex items-center gap-4 mt-4 sm:mt-0">
+                    <span class="hover:text-neutral-300 cursor-pointer">Privacy Policy</span>
+                    <span>•</span>
+                    <span class="hover:text-neutral-300 cursor-pointer">Terms &amp; Conditions</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
